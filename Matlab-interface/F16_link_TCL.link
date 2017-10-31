@@ -1,0 +1,62 @@
+#MATLAB link test
+
+#Matlab link control file
+
+target matlab
+
+# Matlab window disposition (hide, show, keep)
+
+window hide
+
+# Matlab output buffer size for verbose output
+
+output 655360
+
+object
+
+# Matlab command on init
+#   ans is GLD_OK when init succeeds
+#   ans is GLD_ERROR when init fails
+
+on_init current_timestep=0; next_timestep=0; if exist('iamtoo.txt') delete('iamtoo.txt'); end; ans=GLD_OK;
+
+# Matlab command on sync
+#   ans is timestamp of next needed sync event
+#   ans is TS_NEVER if no sync event needed
+#   ans is TS_ERROR if an error occurred
+#
+
+on_sync five94_TCL;
+#meter_load=fortran_control(1); disp(load_1); ans=TS_NEVER; 
+#m=1; csvwrite('wait.txt',m); csvwrite('iamtoo.txt',m); pan_power=csvread('load_output.csv'); disp(pan_power); waitfor(w); ans=TS_NEVER;
+#gtime=gridlabd.global.clock; disp(gtime); 
+
+# Matlab command on term
+#   ans is GLD_OK when term succeeds
+#   ans is GLD_ERROR when term fails
+on_term disp('Were Done!!'); ans=GLD_OK;
+
+#Matlab root variable name for published data
+#root gld
+
+# Global variables to publish (readonly)
+# Default is all globals
+# Listing "global" all by itself once will cause no globals to be published
+
+global clock
+
+# Variables to import from matlab to gridlabd and to export from gridlabd to Matlab workspace (by name)
+# Default is none are imported or exported
+#import test_load.constant_power_1_real load1
+#import test_load2.constant_power_1_real load2
+export SB_ctrl_inverter.P_demand DR_signal
+import _1657A6_loadb.constant_power_A load_1
+import UG388_loadb.constant_power_B load_2
+import _1675G_loadb.constant_power_C load_3
+import _1676D_loadb.constant_power_A load_4
+import _1679A_loadb.constant_power_C load_5
+import _1668G_loadb.constant_power_A load_6
+import _1668G_loadb.constant_power_C load_7
+import _1629C_loadb.constant_power_A load_8
+import _1629C_loadb.constant_power_B load_9
+import _1674E_loadb.constant_power_A load_10
